@@ -11,82 +11,124 @@
     </style>
 </head>
 <body>
-    <h3>Name: Aman Choudhari</h3>
-    <h3>Roll No: 42411</h3>
-    <h1>Array Operations</h1>
+    <div class="container">
+        <h3>Name: Aman Choudhari</h3>    
+        <h3>Roll No: 42411</h3>
+      <h1>Array Operations</h1>
 
-    <label for="arraySize">Enter the size of the array:</label>
-    <input type="number" id="arraySize" min="1" required />
-    <button onclick="validateSize()">Set Array Size</button>
+      <div id="sizeSection">
+        <label for="arraySize">Enter the size of the array:</label>
+        <input type="number" id="arraySize" min="1" required />
+        <button onclick="validateSize()">Set Array Size</button>
+      </div>
 
-    <div id="arrayInputs"></div>
-    <div id="appendSection" style="display: none;">
+      <div id="arrayInputs"></div>
+
+      <div id="appendSection">
         <label for="appendValue">Enter value to append:</label>
         <input type="text" id="appendValue" required />
         <button onclick="appendToArray()">Append to Array</button>
+      </div>
+
+      <div id="result" class="result"></div>
     </div>
 
-    <div id="result" class="result"></div>
-
     <script>
-        let myArray = [];
-        let arraySize = 0;
+      let myArray = [];
+      let arraySize = 0;
 
-        function validateSize() {
-            arraySize = parseInt(document.getElementById("arraySize").value);
-            if (arraySize > 0) {
-                createArrayInputs();
-            } else {
-                alert("Please enter a valid array size.");
-            }
+      function validateSize() {
+        const sizeInput = document.getElementById("arraySize");
+        arraySize = parseInt(sizeInput.value);
+
+        if (arraySize > 0) {
+          document.getElementById("sizeSection").style.display = "none";
+          createArrayInputs();
+        } else {
+          alert("Please enter a valid array size (greater than 0).");
         }
+      }
 
-        function createArrayInputs() {
-            const arrayInputs = document.getElementById("arrayInputs");
-            arrayInputs.innerHTML = "";
-            for (let i = 0; i < arraySize; i++) {
-                arrayInputs.innerHTML += `
-                    <label for="arrayItem${i}">Item ${i + 1}:</label>
+      function createArrayInputs() {
+        const arrayInputs = document.getElementById("arrayInputs");
+        arrayInputs.innerHTML = "";
+        arrayInputs.style.display = "block";
+
+        for (let i = 0; i < arraySize; i++) {
+          arrayInputs.innerHTML += `
+                    <label for="arrayItem${i}">Enter value for item ${
+            i + 1
+          }:</label>
                     <input type="text" id="arrayItem${i}" required>
                 `;
-            }
-            arrayInputs.innerHTML += '<button onclick="createArray()">Create Array</button>';
         }
 
-        function createArray() {
-            myArray = [];
-            for (let i = 0; i < arraySize; i++) {
-                const value = document.getElementById(`arrayItem${i}`).value;
-                myArray.push(value);
-            }
-            document.getElementById("appendSection").style.display = "block";
-            updateArrayDisplay();
+        arrayInputs.innerHTML +=
+          '<button onclick="createArray()">Create Array</button>';
+      }
+
+      function createArray() {
+        myArray = [];
+        for (let i = 0; i < arraySize; i++) {
+          const value = document.getElementById(`arrayItem${i}`).value;
+          myArray.push(parseInput(value));
         }
 
-        function appendToArray() {
-            const input = document.getElementById("appendValue").value.trim();
-            myArray.push(input);
-            checkAppendedObject(input);
-            updateArrayDisplay();
-        }
+        document.getElementById("arrayInputs").style.display = "none";
+        document.getElementById("appendSection").style.display = "block";
+        updateArrayDisplay();
+      }
 
-        function checkAppendedObject(value) {
-            const isArray = Array.isArray(value);
-            document.getElementById("result").innerHTML += `
-                <p>Is appended object an array? ${isArray}</p>
-                <p>Appended value: ${JSON.stringify(value)}</p>
+      function appendToArray() {
+        const input = document.getElementById("appendValue").value.trim();
+        const value = parseInput(input);
+
+        myArray.push(value);
+        checkAppendedObject(value);
+        updateArrayDisplay();
+      }
+
+      function parseInput(input) {
+        if (
+          (input.startsWith("[") && input.endsWith("]")) ||
+          (input.startsWith("{") && input.endsWith("}"))
+        ) {
+          try {
+            return JSON.parse(input);
+          } catch (e) {
+            return input;
+          }
+        }
+        return input;
+      }
+
+      function checkAppendedObject(value) {
+        const isArray = Array.isArray(value);
+        document.getElementById("result").innerHTML += `
+                <p><strong>Is appended object an array?</strong> ${isArray}</p>
+                <p><strong>Appended value:</strong> ${JSON.stringify(value)}</p>
             `;
-        }
+      }
 
-        function updateArrayDisplay() {
-            let displayHTML = "<p>Current Array:</p><ul>";
-            myArray.forEach((item, index) => {
-                const isItemArray = Array.isArray(item);
-                displayHTML += `<li>Index ${index}: ${JSON.stringify(item)} - Is array? ${isItemArray}</li>`;
-            });
-            displayHTML += "</ul>";
-            document.getElementById("result").innerHTML = displayHTML;
-        }
+      function updateArrayDisplay() {
+        let displayHTML = "<p><strong>Current Array:</strong></p><ul>";
+
+        myArray.forEach((item, index) => {
+          const isItemArray = Array.isArray(item);
+          displayHTML += `
+                    <li>
+                        Index ${index}: ${JSON.stringify(item)}
+                        <br>
+                        <strong>Is array?</strong> ${isItemArray}
+                    </li>
+                `;
+        });
+
+        displayHTML += "</ul>";
+        displayHTML += `<p><strong>Array Length:</strong> ${myArray.length}</p>`;
+
+        document.getElementById("result").innerHTML = displayHTML;
+      }
     </script>
-</body>
+  </body>
 </html>
