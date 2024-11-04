@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String Operations</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 20px;}
+        input, button {margin: 5px 0; padding: 5px; width: 100%;}
+    </style>
+</head>
+<body>
+
+    <h3>Name: Aman Choudhari</h3>    
+    <h3>Roll No: 42411</h3>
+    <h2>String Operations</h2>
+
+    <h3>Reverse String</h3>
+    <input type="text" id="inputReverse" placeholder="Enter a string...">
+    <button onclick="reverseString()">Reverse</button>
+    <div id="outputReverse"></div>
+
+    <h3>Replace Characters</h3>
+    <input type="text" id="inputReplaceOriginal" placeholder="Enter original string...">
+    <input type="text" id="inputReplaceChar" placeholder="Enter character to replace...">
+    <input type="text" id="inputReplaceNew" placeholder="Enter new character...">
+    <button onclick="replaceCharacters()">Replace</button>
+    <div id="outputReplace"></div>
+
+    <h3>Check Palindrome</h3>
+    <input type="text" id="inputPalindrome" placeholder="Enter a string...">
+    <button onclick="checkPalindrome()">Check Palindrome</button>
+    <div id="outputPalindrome"></div>
+
+    <script>
+        function reverseString() {
+            let inputStr = document.getElementById('inputReverse').value;
+            let reversedStr = '';
+            for (let i = inputStr.length - 1; i >= 0; i--) {
+                reversedStr += inputStr[i]; // Append each character in reverse order
+            }
+            displayOutput('outputReverse', `Reversed string: ${reversedStr}`);
+        }
+
+        function replaceCharacters() {
+            let originalStr = document.getElementById('inputReplaceOriginal').value;
+            let charToReplace = document.getElementById('inputReplaceChar').value;
+            let newChar = document.getElementById('inputReplaceNew').value;
+
+            if (charToReplace.length !== 1 || newChar.length !== 1) {
+                displayOutput('outputReplace', 'Please enter a single character for both fields.');
+                return;
+            }
+
+            if (!originalStr.includes(charToReplace)) {
+                displayOutput('outputReplace', `Character "${charToReplace}" not found in the string.`);
+                return;
+            }
+
+            let replacedStr = originalStr.split(charToReplace).join(newChar);
+            displayOutput('outputReplace', `Replaced string: ${replacedStr}`);
+        }
+
+        function checkPalindrome() {
+            let inputStr = document.getElementById('inputPalindrome').value;
+            let cleanStr = inputStr.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+            let isPalindrome = cleanStr === cleanStr.split('').reverse().join('');
+            displayOutput('outputPalindrome', isPalindrome 
+                ? `"${inputStr}" is a palindrome.` 
+                : `"${inputStr}" is not a palindrome.`);
+        }
+
+        function displayOutput(outputId, message) {
+            document.getElementById(outputId).innerText = message;
+        }
+    </script>
+    
+</body>
+</html>

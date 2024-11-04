@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 90%;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h3>Name: Aman Choudhari</h3>
+    <h3>Roll No: 42411</h3>
+    <h1>Array Operations</h1>
+
+    <label for="arraySize">Array Size:</label>
+    <br> <!-- Added line break here -->
+    <input type="number" id="arraySize" placeholder="Enter size" min="1" required>
+    <br> <!-- Added line break here -->
+
+    <label for="arrayElements">Array Elements (comma-separated):</label>
+    <br> <!-- Added line break here -->
+    <input type="text" id="arrayElements" placeholder="Enter elements">
+    <button onclick="initializeArray()">Initialize Array</button>
+    <br> <!-- Added line break here -->
+
+    <label for="deleteValue">Element to Delete:</label>
+    <br> <!-- Added line break here -->
+    <input type="text" id="deleteValue" placeholder="Element to delete">
+    <button onclick="deleteElement()">Delete Element</button>
+    <br> <!-- Added line break here -->
+
+    <label for="checkValue">Value to Check:</label>
+    <br> <!-- Added line break here -->
+    <input type="text" id="checkValue" placeholder="Value to check">
+    <button onclick="checkValue()">Check Value</button>
+    <br> <!-- Added line break here -->
+
+    <button onclick="emptyArray()">Empty Array</button>
+    <div id="result" class="result"></div>
+
+    <script>
+        let array = [];
+
+        function initializeArray() {
+            const arraySize = parseInt(document.getElementById("arraySize").value);
+            const arrayInput = document.getElementById("arrayElements").value;
+            const resultDiv = document.getElementById("result");
+
+            resultDiv.innerHTML = "";
+
+            if (isNaN(arraySize) || arraySize <= 0) {
+                resultDiv.innerHTML = "<p class='error'>Invalid size.</p>";
+                return;
+            }
+
+            array = arrayInput.split(",").map(item => item.trim());
+
+            if (array.length !== arraySize) {
+                resultDiv.innerHTML = "<p class='error'>Size and elements don't match.</p>";
+                return;
+            }
+
+            resultDiv.innerHTML = `<p><strong>Initialized:</strong> ${array}</p>`;
+        }
+
+        function deleteElement() {
+            const deleteValue = document.getElementById("deleteValue").value.trim();
+            const resultDiv = document.getElementById("result");
+
+            resultDiv.innerHTML = "";
+
+            const deleteIndex = array.indexOf(deleteValue);
+
+            if (deleteIndex > -1) {
+                array.splice(deleteIndex, 1);
+                resultDiv.innerHTML = `<p><strong>Deleted '${deleteValue}'.</strong></p>`;
+            } else {
+                resultDiv.innerHTML = `<p class='error'>Not found.</p>`;
+            }
+
+            resultDiv.innerHTML += `<p><strong>After deletion:</strong> ${array}</p>`;
+        }
+
+        function checkValue() {
+            const checkValue = document.getElementById("checkValue").value.trim();
+            const resultDiv = document.getElementById("result");
+
+            resultDiv.innerHTML = `<p><strong>Array:</strong> ${array}</p>`;
+            resultDiv.innerHTML += `<p><strong>Contains '${checkValue}':</strong> ${array.includes(checkValue)}</p>`;
+        }
+
+        function emptyArray() {
+            array = [];
+            document.getElementById("result").innerHTML = "<p><strong>Array emptied.</strong></p>";
+        }
+    </script>
+</body>
+</html>

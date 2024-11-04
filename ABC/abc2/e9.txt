@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Information Form</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin: 100px auto; }
+        input, select { width: 80%; padding: 8px; margin: 10px 0; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Student Information Form</h1>
+    <form id="studentForm" onsubmit="return validateForm()">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="text" id="address" placeholder="Address" required />
+        <input type="text" id="city" placeholder="City" required />
+        <input type="text" id="state" placeholder="State" required />
+        <input type="text" id="pincode" placeholder="Pin Code" required />
+        <select id="gender" required>
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" id="mobile" placeholder="Mobile Number" required />
+        <input type="email" id="email" placeholder="Email ID" required />
+        <div id="errorMessage" class="error"></div>
+        <input type="submit" value="Submit" />
+    </form>
+
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value;
+            let city = document.getElementById("city").value;
+            let state = document.getElementById("state").value;
+            let pincode = document.getElementById("pincode").value;
+            let mobile = document.getElementById("mobile").value;
+            let email = document.getElementById("email").value;
+            let errorMessage = document.getElementById("errorMessage");
+
+            errorMessage.innerHTML = ""; // Clear previous errors
+
+            // Name validation
+            if (!/^[a-zA-Z\s]+$/.test(name)) {
+                errorMessage.innerHTML = "Invalid name (letters and spaces only).";
+                return false;
+            }
+
+            // City and State validation
+            if (!/^[a-zA-Z]+$/.test(city)) {
+                errorMessage.innerHTML = "Invalid city (letters only).";
+                return false;
+            }
+            if (!/^[a-zA-Z]+$/.test(state)) {
+                errorMessage.innerHTML = "Invalid state (letters only).";
+                return false;
+            }
+
+            // Pin Code validation
+            if (!/^[0-9]{6}$/.test(pincode)) {
+                errorMessage.innerHTML = "Invalid 6-digit Pin Code.";
+                return false;
+            }
+
+            // Mobile validation
+            if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+                errorMessage.innerHTML = "Invalid mobile number (10 digits).";
+                return false;
+            }
+
+            // Email validation
+            if (!/^[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/.test(email)) {
+                errorMessage.innerHTML = "Invalid email (gmail.com, yahoo.com, hotmail.com).";
+                return false;
+            }
+
+            // Show welcome page
+            showWelcomePage();
+            return false; // Prevent form submission
+        }
+
+        function showWelcomePage() {
+            document.body.innerHTML = `
+                <h1>Congratulations!</h1>
+                <p>Welcome to our platform.</p>
+                <button onclick="location.reload()">Go Back</button>
+            `;
+        }
+    </script>
+</body>
+</html>
+

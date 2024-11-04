@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body { background-color: white; text-align: center; font-size: x-large; margin-top: 100px; }
+    </style>
+</head>
+<body>
+    <h4>Aman Choudhari</h4>
+    <h4>42411</h4>
+    <h4>P8</h4>
+    <label onmouseover="changeBackground('red')" onmouseleave="resetBackground()">Change Home page background color.</label>
+    <br><br>
+    <input placeholder="Click here for focus event" id="focusInput" type="text" onfocus="focusEvent()" onblur="blurEvent()">
+    
+    <script>
+        function changeBackground(color) {
+            document.body.style.backgroundColor = color;
+        }
+        
+        function resetBackground() {
+            document.body.style.backgroundColor = 'white';
+        }
+
+        function focusEvent() {
+            document.getElementById("focusInput").style.backgroundColor = 'green';
+            document.body.style.backgroundColor = 'blue';
+        }
+
+        function blurEvent() {
+            document.getElementById("focusInput").style.backgroundColor = 'white';
+            document.body.style.backgroundColor = 'green';
+        }
+    </script>
+</body>
+</html>

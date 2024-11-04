@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px 0;
+            padding: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Name: Aman Choudhari</h3>    
+    <h3>Roll No: 42411</h3>
+    <h2>String Comparison</h2>
+    
+    <input type="text" id="string1" placeholder="Enter the first string">
+    <input type="text" id="string2" placeholder="Enter the second string">
+    <button onclick="compareStrings()">Compare Strings</button>
+
+    <h3>Comparison Results:</h3>
+    <p id="StrictEqualityResult"></p>
+    <p id="EqualityResult"></p>
+    <p id="lengthResult"></p>
+    <p id="alphabeticalResult"></p>
+    <p id="UserDefinedResult"></p>
+
+    <script>
+        function compareStrings() {
+            const string1 = document.getElementById('string1').value;
+            const string2 = document.getElementById('string2').value;
+
+            function compareStrictEquality(str1, str2) {
+                return str1 === str2 
+                    ? `"${str1}" and "${str2}" are strictly equal.` 
+                    : `"${str1}" and "${str2}" are NOT strictly equal.`;
+            }
+
+            function compareEquality(str1, str2) {
+                return str1 == str2 
+                    ? `"${str1}" and "${str2}" are loosely equal.` 
+                    : `"${str1}" and "${str2}" are NOT loosely equal.`;
+            }
+
+            function userdefinedEquality(str1, str2) {
+                let flag = 1;
+                let size = Math.min(str1.length, str2.length);
+                for (let j = 0; j < size; j++) {
+                    if (str1[j] !== str2[j]) {
+                        flag = 0;
+                        break;
+                    }
+                }
+                return flag === 1 
+                    ? `"${str1}" and "${str2}" are equal using user-defined method.` 
+                    : `"${str1}" and "${str2}" are not equal using user-defined method.`;
+            }
+
+            function compareLength(str1, str2) {
+                if (str1.length > str2.length) {
+                    return `"${str1}" is longer than "${str2}".`;
+                } else if (str1.length < str2.length) {
+                    return `"${str1}" is shorter than "${str2}".`;
+                } else {
+                    return `"${str1}" and "${str2}" are of the same length.`;
+                }
+            }
+
+            function compareAlphabeticalOrder(str1, str2) {
+                const result = str1.localeCompare(str2);
+                return result < 0 
+                    ? `"${str1}" comes before "${str2}" alphabetically.` 
+                    : result > 0 
+                    ? `"${str1}" comes after "${str2}" alphabetically.` 
+                    : `"${str1}" and "${str2}" are alphabetically the same.`;
+            }
+
+            document.getElementById('StrictEqualityResult').textContent = compareStrictEquality(string1, string2);
+            document.getElementById('EqualityResult').textContent = compareEquality(string1, string2);
+            document.getElementById('lengthResult').textContent = compareLength(string1, string2);
+            document.getElementById('alphabeticalResult').textContent = compareAlphabeticalOrder(string1, string2);
+            document.getElementById('UserDefinedResult').textContent = userdefinedEquality(string1, string2);
+        }
+    </script>
+
+</body>
+</html>
